@@ -1,3 +1,5 @@
+
+// Login and CRUD Automation
 describe('Login Test', () => {
   it('should log in successfully with valid credentials', () => {
     // Step 1: Visit the login page
@@ -66,6 +68,7 @@ describe('Login Test', () => {
     // });
 
   });
+
 
   describe('SVG Button Navigation', function () {
     // test case
