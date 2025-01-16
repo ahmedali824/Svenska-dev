@@ -35,12 +35,12 @@ describe('Login Test', () => {
       .type('123456789');
 
     cy.get('input[placeholder="Ange ditt personnummer"]') 
-      .type('345435345611');
+      .type('345435345651');
 
     cy.get('input[placeholder="Ange ditt land"]') 
       .type('Pakistan');
 
-    cy.get('input[placeholder="Ange ditt stad/stat"]') 
+    cy.get('input[placeholder="Ange ditt län"]') 
       .type('George St/Harbour');
 
     cy.get('input[placeholder="Ange ditt postnummer"]') 
@@ -53,36 +53,39 @@ describe('Login Test', () => {
 
 
 
-    cy.get('.sc-fhzEvr > .undefined').type('jahazaib',{ timeout: 6000 }, { force: true });
-
+    cy.get('.sc-fhzEvr > .undefined').type('Salar',{ timeout: 5000 }, { force: true });
+    
+    cy.wait(5000);
     cy.get(':nth-child(1) > .px-5 > .justify-content-center > :nth-child(2)', { timeout: 6000 }).click();
-
+    cy.wait(2000);
     cy.get('form > .sc-aYaIB').click();
 
     // cy.get(':nth-child(1) > .px-5 > .justify-content-center > .d-flex > .cursor-pointer').click();
-
-    cy.get('.justify-content-center > :nth-child(4)').click();
-
-    // cy.url().then((currentUrl) => {
-    //   cy.log('Current URL before assertion: ' + currentUrl);
-    // });
+    cy.get('div.cursor-pointer.text-muted.bg-snowWhite.p-2.rounded')
+  .eq(3) // Adjust the index if needed
+  .invoke('removeAttr', 'target')
+  .click({ force: true });
+    // cy.get(':nth-child(1) > .px-5 > .justify-content-center > :nth-child(4)').click();
 
   });
-
-
-  describe('SVG Button Navigation', function () {
-    // test case
-    it('Scenario 1', function () {
-       // Visit the URL
-       cy.visit("https://app-dev.svenskatestamenten.se/admin-chat");
+});
+beforeEach(() => {
+  cy.window().then((win) => {
+    cy.stub(win, 'open').callsFake((url) => {
+      win.location.href = url; // Redirect to the URL in the same tab
+    });
  
-       // Click the SVG button
-       cy.get('.cursor-pointer > svg', { timeout: 5000 }) // Select the div containing the SVG
-       
-         // Ensure the button is visible
-         .click({force: true});
-
   });
-});
-});
 
+it('should navigate to admin-chat', () => {
+  cy.get('.cursor-pointer.text-muted.bg-snowWhite')
+    .click();
+  cy.url().should('include', 'https://app-dev.svenskatestamenten.se/admin-chat');
+  // Step 3: Navigate directly to the admin chat
+      // Add further assertions or actions here if needed
+       cy.get(".ql-editor", { timeout: 6000 } )// No need for timeout unless required
+  .type('this is my first project');
+  
+});
+});
+ 
